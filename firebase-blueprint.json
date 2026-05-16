@@ -1,0 +1,57 @@
+{
+  "entities": {
+    "Store": {
+      "title": "Mall Store",
+      "description": "Details of a store in the mall",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "category": { "type": "string", "enum": ["Fashion", "Electronics", "Dining", "Beauty", "Lifestyle"] },
+        "floor": { "type": "integer" },
+        "status": { "type": "string", "enum": ["Open", "Closed", "New Arrival"] },
+        "description": { "type": "string" },
+        "logoUrl": { "type": "string" },
+        "coordinates": { "type": "object" },
+        "tags": { "type": "array" }
+      },
+      "required": ["name", "category", "floor"]
+    },
+    "Deal": {
+      "title": "Product Discount",
+      "description": "Active promotional offers at stores",
+      "type": "object",
+      "properties": {
+        "storeId": { "type": "string" },
+        "title": { "type": "string" },
+        "discountPercentage": { "type": "integer" },
+        "expiryDate": { "type": "string", "format": "date-time" },
+        "imageUrl": { "type": "string" }
+      },
+      "required": ["storeId", "title", "discountPercentage"]
+    },
+    "ParkingSlot": {
+      "title": "Parking Tracker",
+      "description": "Real-time parking availability status",
+      "type": "object",
+      "properties": {
+        "zone": { "type": "string" },
+        "isAvailable": { "type": "boolean" },
+        "lastUpdated": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "firestore": {
+    "/stores/{storeId}": {
+      "schema": "Store",
+      "description": "Collection of all stores in ShopCity"
+    },
+    "/deals/{dealId}": {
+      "schema": "Deal",
+      "description": "Active promotional offers across the mall"
+    },
+    "/parking/{slotId}": {
+      "schema": "ParkingSlot",
+      "description": "Live parking occupancy data"
+    }
+  }
+}

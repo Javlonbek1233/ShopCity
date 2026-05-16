@@ -1,0 +1,34 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    // Stores: Publicly readable, admin only writes
+    match /stores/{storeId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Deals: Publicly readable, admin only writes
+    match /deals/{dealId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Parking: Publicly readable, system/admin writes
+    match /parking/{slotId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}

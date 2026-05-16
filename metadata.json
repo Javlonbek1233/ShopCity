@@ -1,0 +1,6 @@
+{
+  "name": "ShopCity",
+  "description": "Smart shopping mall exploration platform with interactive maps, AI assistant, and real-time mall features.",
+  "requestFramePermissions": ["camera", "geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
